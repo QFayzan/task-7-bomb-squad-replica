@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Explode : MonoBehaviour
 {
+   
     public float delay =3.0f;
-    public float bombRadius = 5.0f;
+    public float bombRadius = 4.0f;
     public float explosionForce = 700.0f;
     float countdown;
     public GameObject explosionEffect;
@@ -13,7 +14,6 @@ public class Explode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         countdown = delay;
     }
 
@@ -24,6 +24,7 @@ public class Explode : MonoBehaviour
         if (countdown <= 0 && !hasExploded )
         {
             Explosion();
+            
             hasExploded = true;
         }
     }
@@ -43,9 +44,13 @@ public class Explode : MonoBehaviour
        {
         player.playerHealth -=4;
        }
-       nearbyObject.GetComponent<EnemyController>();
-       EnemyController.enemyHealth -=4;
+       var enemy = nearbyObject.GetComponent<EnemyController>();
+       if (enemy != null) 
+       {
+        enemy.enemyHealth -=4;
        }
+       }
+        
         Destroy(gameObject);
     }
 }

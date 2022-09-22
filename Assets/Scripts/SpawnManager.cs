@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class SpawnManager : MonoBehaviour
 {
+    public TextMeshProUGUI waveNum;
     private float spawnRange = 14;
     public GameObject enemyPrefabs;
     public GameObject[] powerupPrefab;
@@ -19,6 +20,7 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        waveNum.text = " Wave number is :  " + waveNumber.ToString();
         enemyCount =  GameObject.FindGameObjectsWithTag("Enemy").Length;
         if(enemyCount == 0)
         {
@@ -44,7 +46,8 @@ public class SpawnManager : MonoBehaviour
     {
         int index = Random.Range(0, powerupPrefab.Length);
         {
-            Instantiate(powerupPrefab[index], GenerateSpawnPosition(), powerupPrefab[index].transform.rotation);
+          var instance =  Instantiate(powerupPrefab[index], GenerateSpawnPosition(), powerupPrefab[index].transform.rotation);
+          Destroy(instance , 4.0f);
         }
 
     }

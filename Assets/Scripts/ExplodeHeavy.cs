@@ -40,10 +40,13 @@ public class ExplodeHeavy : MonoBehaviour
        var player = nearbyObject.GetComponent<PlayerController>();
        if (player != null)
        {
-        player.playerHealth -=8;
+        player.playerHealth -=4;
        }
-       nearbyObject.GetComponent<EnemyController>();
-       EnemyController.enemyHealth -=8;
+       var enemy = nearbyObject.GetComponent<EnemyController>();
+       if (enemy != null) 
+       {
+        enemy.enemyHealth -=4;
+       }
        }
         Destroy(gameObject);
     }

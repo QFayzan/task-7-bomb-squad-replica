@@ -2,25 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplodeLight : MonoBehaviour
+public class StickyBomb : MonoBehaviour
 {
     private Rigidbody rb;
-    public float delay =7.0f;
-    public float bombRadius = 5.0f;
+    public float delay =2.0f;
+    public float bombRadius = 2.0f;
     public float explosionForce = 700.0f;
-    float countdown;
+    public float countdown;
     public GameObject explosionEffect;
     bool hasExploded = false;
-    bool doExplode = false;
+   public bool doExplode = false;
     void Start()
     {
+        doExplode = false;
         rb = GetComponent<Rigidbody>();
     }
-    // Update is called once per frame
     void Update()
     {
         countdown -= Time.deltaTime;
-        if (countdown <= 0 && !hasExploded )
+        if (countdown <= 0 && !hasExploded && doExplode )
         {
             Explosion();
             hasExploded = true;
@@ -33,23 +33,24 @@ public class ExplodeLight : MonoBehaviour
        foreach(Collider nearbyObject in colliders)
        {
        Rigidbody rb =  nearbyObject.GetComponent<Rigidbody>();
-       if (rb.gameObject.tag =="Enemy" && doExplode)
+       if (rb !=null)
        {
-        rb.isKinematic = true;
         rb.AddExplosionForce(explosionForce , transform.position , bombRadius);
-        hasExploded = true;
-        EnemyController.enemyHealth-=4;
        }
-       
+        var player = nearbyObject.GetComponent<PlayerController>();
+       if (player != null)
+       {
+        player.playerHealth -=4;
        }
-        
+       var enemy = nearbyObject.GetComponent<EnemyController>();
+       if (enemy != null) 
+       {
+        enemy.enemyHealth -=4;
+       }
+       hasExploded =true;
+       Destroy(gameObject);  
     }
-    void OnCollisionEnter(Collision collision) 
-    {
-        if (collision.gameObject.tag ==("Enemy") )
-        {
-            doExplode = true;
-             countdown = delay;
-        }
     }
+   
+    
 }

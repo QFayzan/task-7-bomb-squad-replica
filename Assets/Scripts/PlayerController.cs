@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
         }
         //Sets the rotation of the character in the direction it is moving
         Vector3 movementDirection = new Vector3 (horizontalInput, 0, verticalInput);
-       // movementDirection.Normalize();
+        movementDirection.Normalize();
         //End of direction setting
         if (!isDead)          //only move when alive
         {
@@ -53,11 +53,12 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector3.forward * speed * verticalInput );        
         }
         //Smooth Rotation code that uses rotate speed
-        if (movementDirection != Vector3.zero)
+       if (movementDirection != Vector3.zero)
         {
-            Quaternion toRotation = Quaternion.LookRotation(movementDirection,Vector3.up);
+           Quaternion toRotation = Quaternion.LookRotation(movementDirection,Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation ,toRotation , rotationSpeed * Time.deltaTime);
         }
+        
         if (playerHealth <1 || transform.position.y <-0.5f) //the convulted thing is done to separate all dying logic and such in one fucntion for particles etc
         {
             Die();
@@ -82,10 +83,16 @@ public class PlayerController : MonoBehaviour
             else if (other.name.Contains("Powerup Red"))
             {
                 BombSpawner.redToken = true;
+                BombSpawner.shootTime +=10;
+                BombSpawner.rapidTime +=10;
             }
             else if (other.name.Contains("Powerup Green"))
             {
                 BombSpawner.greenToken +=3;
+            }
+             else if (other.name.Contains("Powerup Pink"))
+            {
+                playerHealth++;
             }
             //Play collection sound and effect here
             Destroy(other.gameObject);

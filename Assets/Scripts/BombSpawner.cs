@@ -1,16 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class BombSpawner : MonoBehaviour
 {
+    public TextMeshProUGUI stickyHeld;
+    public TextMeshProUGUI minesHeld;
+    public TextMeshProUGUI rapidText;
     public GameObject[] bombs;
     private GameObject player;
     private Rigidbody bombRb;
     public float launchSpeed = 200.0f;
     public static bool redToken = false;
-    public bool doShoot = true;
     public static float shootTime = 0.0f;
+    public static float rapidTime =0.0f;
+    public bool doShoot = true;
+    
     public static int blueToken = 0;
     public static int greenToken = 0;
     // Start is called before the first frame update
@@ -23,13 +29,16 @@ public class BombSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (redToken)
+        shootTime += Time.deltaTime;
+        minesHeld.text = "Mines = " + greenToken.ToString();
+        stickyHeld.text = "Sticky Bombs = " +blueToken.ToString();
+        rapidText.text = "Rapid fire time = " + rapidTime.ToString();
+        rapidTime -= Time.deltaTime;
+        if (rapidTime <0)
         {
-            shootTime += 10;
-            redToken = false;
+            rapidTime = 0;
         }
-        shootTime = shootTime + Time.deltaTime;
-        if (shootTime > 0.6f)
+        if (shootTime > 1)
         {
             doShoot = true;
         }
@@ -42,15 +51,22 @@ public class BombSpawner : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.J) && doShoot)
         {
            var instance = Instantiate(bombs[0] , spawnLocation ,transform.rotation);
-            instance.GetComponent<Rigidbody>().AddForce(lookDirection * launchSpeed ,  ForceMode.Acceleration);
+            instance.GetComponent<Rigidbody>().AddForce(lookDirection * launchSpeed *4 ,  ForceMode.Acceleration);
+            doShoot = false;
+            if (!redToken)
+            {
+            shootTime = 0;
+            rapidTime = 0;
+            doShoot = false;
+            }
             Debug.Log("Normal Bomb");
         }
         if(Input.GetKeyDown (KeyCode.K) && blueToken >1)
         {
             var instance = Instantiate(bombs[1] , spawnLocation ,transform.rotation);
-            instance.GetComponent<Rigidbody>().AddForce(lookDirection * launchSpeed ,  ForceMode.Acceleration);
+            instance.GetComponent<Rigidbody>().AddForce(lookDirection * launchSpeed *4 ,  ForceMode.Acceleration);
             blueToken--;
-            Debug.Log("Light Bomb");
+            Debug.Log("Sticky Bomb");
             
         }
         if(Input.GetKeyDown (KeyCode.L) && greenToken >1)

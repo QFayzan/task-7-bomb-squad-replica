@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 8368913853619150008}
   - component: {fileID: -7199893602865748520}
   m_Layer: 0
-  m_Name: LightBomb
-  m_TagString: Untagged
+  m_Name: StickyBomb
+  m_TagString: Sticky
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 4357910983823917036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.47, y: 0.000000080245584, z: 2.9216413}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -130,4 +130,6 @@ MonoBehaviour:
   delay: 3
   bombRadius: 5
   explosionForce: 700
+  countdown: 0
   explosionEffect: {fileID: 725748389856807714, guid: 4bda94453d2ca7444a0fff05b2d425f5, type: 3}
+  doExplode: 0

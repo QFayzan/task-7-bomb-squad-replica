@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 2820449267916397545}
   - component: {fileID: 2820449267914358002}
   - component: {fileID: 3120752676066941727}
-  - component: {fileID: 3861363352730450966}
+  - component: {fileID: -5058650295548199590}
   m_Layer: 0
   m_Name: BombCrate
-  m_TagString: Untagged
+  m_TagString: Bomb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,7 +115,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.554324, y: 1.5543231, z: 1.5543228}
   m_Center: {x: 0, y: 0.77716154, z: 0}
---- !u!114 &3861363352730450966
+--- !u!114 &-5058650295548199590
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,4 +128,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 3
+  bombRadius: 4
+  explosionForce: 700
   explosionEffect: {fileID: 2433282508537954060, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
